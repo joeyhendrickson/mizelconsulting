@@ -8,14 +8,14 @@ import { usePathname } from 'next/navigation'
 
 const Logo = () => (
   <Link href="/" className="flex items-center gap-3">
-    <svg
-      className="w-8 h-8 text-blue-600"
-      fill="currentColor"
-      viewBox="0 0 24 24"
-    >
-      <path d="M12 2L4 7v8c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V7l-8-5z"/>
-      <path d="M12 6l6 3v6H6V9l6-3z"/>
-    </svg>
+    <div className="relative">
+      {/* Modern M Logo */}
+      <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl flex items-center justify-center shadow-lg">
+        <span className="text-white font-bold text-xl">M</span>
+      </div>
+      {/* Subtle glow effect */}
+      <div className="absolute inset-0 w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl opacity-20 blur-sm"></div>
+    </div>
 
     <span className="text-2xl font-bold text-gray-900">Mizel Safety Consulting</span>
   </Link>

@@ -372,12 +372,14 @@ const Chatbot = () => {
       <div className="fixed bottom-4 left-4 z-50">
         <button
           onClick={() => setIsChatbotOpen(true)}
-          className="bg-blue-600 text-white p-6 rounded-full shadow-lg hover:bg-blue-700 transition-colors"
+          className="relative bg-white p-4 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100"
         >
-          <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2L4 7v8c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V7l-8-5z"/>
-            <path d="M12 6l6 3v6H6V9l6-3z"/>
-          </svg>
+          {/* Modern M Logo */}
+          <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl flex items-center justify-center shadow-lg">
+            <span className="text-white font-bold text-2xl">M</span>
+          </div>
+          {/* Subtle glow effect */}
+          <div className="absolute inset-0 w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl opacity-20 blur-sm"></div>
         </button>
       </div>
     )
@@ -531,12 +533,12 @@ const Chatbot = () => {
           <button
             onClick={() => handleSendMessage()}
             disabled={!inputValue.trim()}
-            className="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="relative px-3 py-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 hover:shadow-md"
           >
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2L4 7v8c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V7l-8-5z"/>
-              <path d="M12 6l6 3v6H6V9l6-3z"/>
-            </svg>
+            {/* Modern M Logo */}
+            <div className="w-6 h-6 bg-gradient-to-br from-blue-600 to-blue-800 rounded-md flex items-center justify-center shadow-sm">
+              <span className="text-white font-bold text-sm">M</span>
+            </div>
           </button>
         </div>
       </div>

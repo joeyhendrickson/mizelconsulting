@@ -360,51 +360,78 @@ export default function CoursesPage() {
             {[
               { 
                 name: 'Construction Safety', 
-                image: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&h=400&fit=crop&crop=center', 
+                gradient: 'from-orange-500 to-red-600',
+                icon: '🏗️',
                 description: 'Industry-specific construction safety training and certifications' 
               },
               { 
                 name: 'Environmental Safety', 
-                image: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=800&h=400&fit=crop&crop=center', 
+                gradient: 'from-green-500 to-emerald-600',
+                icon: '🌱',
                 description: 'HAZWOPER and environmental compliance training programs' 
               },
               { 
                 name: 'General Safety', 
-                image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&h=400&fit=crop&crop=center', 
+                gradient: 'from-blue-500 to-indigo-600',
+                icon: '🏭',
                 description: 'OSHA 10/30 hour general industry safety courses' 
               },
               { 
                 name: 'Specialized Training', 
-                image: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=800&h=400&fit=crop&crop=center', 
+                gradient: 'from-purple-500 to-violet-600',
+                icon: '🎯',
                 description: 'Advanced safety certifications and specialized programs' 
               },
               { 
                 name: 'Digital Learning', 
-                image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&h=400&fit=crop&crop=center', 
+                gradient: 'from-teal-500 to-cyan-600',
+                icon: '💻',
                 description: 'Interactive courses with Quizzes and Monitoring' 
               },
               { 
                 name: 'On-Site Training', 
-                image: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=800&h=400&fit=crop&crop=center', 
+                gradient: 'from-pink-500 to-rose-600',
+                icon: '🏢',
                 description: 'Customized training delivered at your facility' 
               }
             ].map((category, index) => (
-              <div key={index} className="bg-black rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                <div className="h-48 relative">
-                  <img 
-                    src={category.image} 
-                    alt={category.name}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                    <div className="text-white text-center">
-                      <h3 className="text-2xl font-bold mb-2">{category.name}</h3>
+              <div key={index} className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:-translate-y-1">
+                {/* Header with gradient */}
+                <div className={`h-24 bg-gradient-to-r ${category.gradient} relative overflow-hidden`}>
+                  <div className="absolute inset-0 bg-black/10"></div>
+                  <div className="relative h-full flex items-center justify-center">
+                    <div className="text-center text-white">
+                      <div className="text-3xl mb-1">{category.icon}</div>
+                      <h3 className="text-lg font-semibold tracking-wide">{category.name}</h3>
                     </div>
                   </div>
+                  {/* Subtle pattern overlay */}
+                  <div className="absolute inset-0 opacity-10">
+                    <div className="absolute inset-0" style={{
+                      backgroundImage: `radial-gradient(circle at 25% 25%, white 2px, transparent 2px)`,
+                      backgroundSize: '20px 20px'
+                    }}></div>
+                  </div>
                 </div>
+                
+                {/* Content area */}
                 <div className="p-6">
-                  <p className="text-xl text-gray-300">{category.description}</p>
+                  <p className="text-gray-700 text-sm leading-relaxed mb-6">{category.description}</p>
+                  
+                  {/* CTA Button */}
+                  <button className="w-full group/btn relative overflow-hidden bg-gradient-to-r from-gray-50 to-gray-100 hover:from-gray-100 hover:to-gray-200 text-gray-800 font-medium py-3 px-4 rounded-xl border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:shadow-md">
+                    <span className="relative z-10 flex items-center justify-center">
+                      Explore {category.name}
+                      <svg className="ml-2 w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-indigo-500/5 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300"></div>
+                  </button>
                 </div>
+                
+                {/* Subtle border accent */}
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-gray-200 to-transparent"></div>
               </div>
             ))}
           </div>
@@ -481,43 +508,89 @@ export default function CoursesPage() {
               </div>
             ) : filteredCourses.length > 0 ? (
               filteredCourses.map((course) => (
-                <div key={course.id} className="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-300">
-                  {course.featured_image_url && (
-                    <div className="h-48 bg-cover bg-center" style={{ backgroundImage: `url(${course.featured_image_url})` }}></div>
-                  )}
+                <div key={course.id} className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:-translate-y-1">
+                  {/* Header with gradient based on category */}
+                  <div className={`h-24 bg-gradient-to-r ${
+                    course.category === 'Construction Safety' ? 'from-orange-500 to-red-600' :
+                    course.category === 'Environmental Safety' ? 'from-green-500 to-emerald-600' :
+                    course.category === 'General Safety' ? 'from-blue-500 to-indigo-600' :
+                    course.category === 'Specialized Training' ? 'from-purple-500 to-violet-600' :
+                    'from-teal-500 to-cyan-600'
+                  } relative overflow-hidden`}>
+                    <div className="absolute inset-0 bg-black/10"></div>
+                    <div className="relative h-full flex items-center justify-center">
+                      <div className="text-center text-white">
+                        <div className="text-2xl mb-1">
+                          {course.category === 'Construction Safety' ? '🏗️' :
+                           course.category === 'Environmental Safety' ? '🌱' :
+                           course.category === 'General Safety' ? '🏭' :
+                           course.category === 'Specialized Training' ? '🎯' :
+                           '💼'}
+                        </div>
+                        <h3 className="text-sm font-semibold tracking-wide">{course.category}</h3>
+                      </div>
+                    </div>
+                    {/* Subtle pattern overlay */}
+                    <div className="absolute inset-0 opacity-10">
+                      <div className="absolute inset-0" style={{
+                        backgroundImage: `radial-gradient(circle at 25% 25%, white 2px, transparent 2px)`,
+                        backgroundSize: '20px 20px'
+                      }}></div>
+                    </div>
+                  </div>
+                  
+                  {/* Content area */}
                   <div className="p-6">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm font-medium text-blue-600 bg-blue-100 px-2 py-1 rounded-full">
-                        {course.category}
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded-full">
+                        {course.duration_hours}h • {course.certification_type}
                       </span>
                       {course.is_featured && (
-                        <span className="text-sm font-medium text-green-600 bg-green-100 px-2 py-1 rounded-full">
-                          Best Seller
+                        <span className="text-xs font-medium text-green-600 bg-green-50 px-2 py-1 rounded-full">
+                          ⭐ Best Seller
                         </span>
                       )}
                     </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">{course.title}</h3>
-                    <p className="text-xl text-gray-600 mb-4">{course.short_description}</p>
+                    
+                    <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2">{course.title}</h3>
+                    <p className="text-sm text-gray-600 mb-4 line-clamp-3">{course.short_description}</p>
+                    
                     <div className="flex items-center justify-between mb-4">
                       <div className="text-2xl font-bold text-gray-900">${course.price}</div>
-                      <div className="text-sm text-gray-500">
-                        {course.duration_hours}h • {course.certification_type}
+                      <div className="text-xs text-gray-500">
+                        {course.enrollment_count} enrolled
                       </div>
                     </div>
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {course.delivery_method.map((method, index) => (
+                    
+                    <div className="flex flex-wrap gap-1 mb-4">
+                      {course.delivery_method.slice(0, 2).map((method, index) => (
                         <span key={index} className="text-xs font-medium text-gray-600 bg-gray-100 px-2 py-1 rounded-full">
                           {method}
                         </span>
                       ))}
+                      {course.delivery_method.length > 2 && (
+                        <span className="text-xs font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+                          +{course.delivery_method.length - 2} more
+                        </span>
+                      )}
                     </div>
+                    
                     <Link
                       href={`/course/${course.slug}`}
-                      className="block w-full bg-blue-600 text-white text-center font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+                      className="block w-full group/btn relative overflow-hidden bg-gradient-to-r from-gray-50 to-gray-100 hover:from-gray-100 hover:to-gray-200 text-gray-800 font-medium py-3 px-4 rounded-xl border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:shadow-md"
                     >
-                      View Course
+                      <span className="relative z-10 flex items-center justify-center">
+                        View Course Details
+                        <svg className="ml-2 w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </span>
+                      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-indigo-500/5 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300"></div>
                     </Link>
                   </div>
+                  
+                  {/* Subtle border accent */}
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-gray-200 to-transparent"></div>
                 </div>
             ))
             ) : (
