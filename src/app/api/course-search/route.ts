@@ -1,12 +1,36 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@supabase/supabase-js'
+import { createClient, type SupabaseClient } from '@supabase/supabase-js'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
-const supabase = createClient(supabaseUrl, supabaseServiceKey)
+const supabaseUrl =
+  process.env.NEXT_PUBLIC_SUPABASE_URL ?? process.env.SUPABASE_URL ?? ''
+const supabaseServiceKey =
+  process.env.SUPABASE_SERVICE_ROLE_KEY ?? process.env.SUPABASE_SERVICE_KEY ?? ''
+
+const courseSearchSupabaseConfigured = Boolean(supabaseUrl && supabaseServiceKey)
+
+const supabase: SupabaseClient = courseSearchSupabaseConfigured
+  ? createClient(supabaseUrl, supabaseServiceKey)
+  : new Proxy(
+      {},
+      {
+        get() {
+          throw new Error(
+            'Supabase environment variables are not configured. Please set NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY.'
+          )
+        }
+      }
+    ) as SupabaseClient
 
 export async function POST(request: NextRequest) {
   try {
+    if (!courseSearchSupabaseConfigured) {
+      console.error('Supabase client not configured for course search')
+      return NextResponse.json(
+        { error: 'Supabase is not configured' },
+        { status: 500 }
+      )
+    }
+
     const { query, email, mode = 'default', sessionId } = await request.json()
 
     if (!query) {
@@ -194,6 +218,14 @@ I'll create a customized proposal for your organization. What would you like to 
 
 export async function GET(request: NextRequest) {
   try {
+    if (!courseSearchSupabaseConfigured) {
+      console.error('Supabase client not configured for course search analytics')
+      return NextResponse.json(
+        { error: 'Supabase is not configured' },
+        { status: 500 }
+      )
+    }
+
     // Get search analytics for admin dashboard
     const { data: analytics, error } = await supabase
       .from('course_search_analytics')
