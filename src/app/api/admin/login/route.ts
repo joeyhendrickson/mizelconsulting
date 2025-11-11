@@ -1,8 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabaseClient';
+import { supabase, supabaseConfigured } from '@/lib/supabaseClient';
 
 export async function POST(request: NextRequest) {
   try {
+    if (!supabaseConfigured) {
+      console.error('Supabase client not configured')
+      return NextResponse.json(
+        { error: 'Supabase is not configured' },
+        { status: 500 }
+      )
+    }
+
     const body = await request.json();
     const { email, password } = body;
 

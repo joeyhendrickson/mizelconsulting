@@ -1,8 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { supabase } from '@/lib/supabaseClient'
+import { supabase, supabaseConfigured } from '@/lib/supabaseClient'
 
 export async function GET(request: NextRequest) {
   try {
+    if (!supabaseConfigured) {
+      console.error('Supabase client not configured')
+      return NextResponse.json(
+        { success: false, message: 'Supabase is not configured' },
+        { status: 500 }
+      )
+    }
+
     const { searchParams } = new URL(request.url)
     const artistId = searchParams.get('artistId')
     const timeRange = searchParams.get('timeRange') || '30d' // 7d, 30d, 90d, 1y
